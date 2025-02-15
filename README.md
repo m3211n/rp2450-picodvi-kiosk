@@ -1,3 +1,5 @@
+![alt text](https://github.com/m3211n/rp2450-picodvi-kiosk/blob/main/preview/photo_2025-02-16_00-53-03.jpg?raw=true)
+
 # RP2450 + PicoDVI Sock Kiosk Display
  Raspberry Pi Pico 2W meets PicoDVI and goes to 27" display!
 
