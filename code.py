@@ -37,6 +37,9 @@ def check_connection():
 
 
 def get_json(url):
+    """
+    Requests JSON from the remote host and returns response as a JSON dictionary
+    """
     global session
     try:
         response = session.get(url)
@@ -68,10 +71,13 @@ def time_date_formatted():
     global pool
 
     try:
+        # Adafruit NTP sometimes fails, so maybe it is a good idea to just use Time API only...
         ntp = NTP(pool, tz_offset=1)
         RTC().datetime = ntp.datetime
     except Exception as e:
         print(f"NTP Sync failed ({e}). Getting time from API")
+
+        # Following code needs to be tested.
 
         api_time = get_json("https://timeapi.io/api/time/current/zone?timeZone=Europe%2FAmsterdam")
         struct_time = time.struct_time(
@@ -109,6 +115,10 @@ def degrees_to_direction(degrees):
 
 
 def get_weather_icon_for_code(code: int):
+    """
+    Converts weather code to a symbol that resolves to the weather icon 
+    from WEATHER.PCF font.
+    """
     if code == 0:
         return "9"
     elif code in (1, 2):
@@ -121,6 +131,10 @@ def get_weather_icon_for_code(code: int):
         return "5"
 
 
+
+# Reads WEATHER_HOURS variable from settings.toml and parses it to tuple.
+# this tuple is used to filter hourly weather forecast in 'parse_weather_data()'
+# and 'WeatherList' widget
 
 get_hours = lambda : tuple(int(h) for h in getenv("WEATHER_HOURS").split(","))
 
@@ -234,7 +248,6 @@ class WeatherList(Widget):
 
     def update(self, dict):
         print(get_hours())
-        # ordered_dict = {key: dict[key] for key in sorted(dict)}
         for index, h in enumerate(get_hours()):
             key = f"{h}:00"
             self.content[index * 2].text = key
@@ -290,6 +303,8 @@ display.root_group = Widget(content=[
     Text(text="connecting to wifi...", anchor_point=(0.5, 0), anchored_position=(320, 220), font=STATUS)
 ])
 
+# Creating widgets
+
 status_wifi = Text(font=STATUS, anchor_point=(0.0, 0.0), anchored_position=(0, -2))
 ram_widget = RamWidget(position = (286, 0))
 time_now = Text(scale=12, color=palette[3], font=STATUS, anchor_point=(0, 0), anchored_position=(16, -16))
@@ -324,7 +339,7 @@ while True:
         radio.enabled = True
         # raise e
 
-
+status_wifi.text = "\u0014 {} ({})".format(getenv('CIRCUITPY_WIFI_SSID'), radio.ipv4_address)
 
 display.root_group = Widget(padding=0, content=[
     Widget(size=(368, 240), content=[
@@ -350,13 +365,14 @@ display.root_group = Widget(padding=0, content=[
 
 
 
+# Uncomment this if widget tree needs debugging
+
 # def print_widget_tree(widget, indent=0):
 #     """
 #     Recursively prints the widget tree with indentation.
 #     """
 #     indent_str = " " * indent
 #     print(f"{indent_str}{widget}")
-
 #     if not ("Rect" in str(type(widget)) or "Text" in str(type(widget))):
 #         for child in widget:
 #             print_widget_tree(child, indent + 2)
@@ -364,11 +380,6 @@ display.root_group = Widget(padding=0, content=[
 # # Example usage:
 # print("Widget Tree:")
 # print_widget_tree(display.root_group[0])
-
-
-
-ram_widget.free, ram_widget.progress = free_mem()
-status_wifi.text = f"\u0014 {getenv("CIRCUITPY_WIFI_SSID")} ({radio.ipv4_address})"
 
 # Main loop
 
