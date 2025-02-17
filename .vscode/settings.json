@@ -1,0 +1,10 @@
+{
+    "python.languageServer": "Pylance",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportMissingModuleSource": "none",
+        "reportShadowedImports": "none"
+    },
+    "circuitpython.board.vid": "E463305087533F32",
+    "circuitpython.board.pid": "waveshare_rp2040_pizero",
+    "circuitpython.board.version": "9.1.4"
+}
