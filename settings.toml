@@ -1,5 +1,10 @@
-CIRCUITPY_WIFI_SSID = "IOT"
-CIRCUITPY_WIFI_PASSWORD = ""
+CIRCUITPY_WIFI_SSID = "Home Sweet Home 5G"
+CIRCUITPY_WIFI_PASSWORD = "82840813.home"
+
+CIRCUITPY_WEB_API_PASSWORD = "12345678"
+CIRCUITPY_WEB_API_PORT = 80
+
+TIME_API = "https://timeapi.io/api/time/current/zone?timeZone=Europe%2FAmsterdam"
 TRAIN_URL = "https://transport.integration.sl.se/v1/sites/9702/departures?transport=TRAIN&forecast=60&direction=1"
 BUS_URL = "https://transport.integration.sl.se/v1/sites/5875/departures?transport=BUS&forecast=60&stop_point_id=51583&direction=2"
 WEATHER_URL = "https://api.open-meteo.com/v1/forecast?latitude=59.414938&longitude=17.825792&current=temperature_2m,precipitation,weather_code,cloud_cover,surface_pressure,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,weather_code,wind_speed_10m,wind_direction_10m&wind_speed_unit=ms&timezone=Europe%2FBerlin&forecast_days=1"
